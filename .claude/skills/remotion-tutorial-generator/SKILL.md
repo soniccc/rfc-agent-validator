@@ -23,8 +23,9 @@ Before considering this task complete, you MUST:
 2. ✅ Ensure total video duration is 2-5 minutes (NOT 1 minute or less)
 3. ✅ Test render at least one scene to verify the project works
 4. ✅ Run `npm run dev` and confirm the Remotion studio opens
-5. ✅ Complete ALL items in the Implementation Checklist below
-6. ✅ Never skip scenes with the rationale "to keep this manageable"
+5. ✅ Test render frames from complex scenes to verify NO content overflow beyond 1080px viewport
+6. ✅ Complete ALL items in the Implementation Checklist below
+7. ✅ Never skip scenes with the rationale "to keep this manageable"
 
 **Do NOT mark the task complete until all checkboxes above are verified.**
 
@@ -481,6 +482,17 @@ Before completing this skill, you MUST:
    - Must be 2-5 minutes (120-300 seconds)
    - Count total frames and verify: totalFrames / fps >= 120
 
+5. **Test for content overflow (CRITICAL):**
+   ```bash
+   # Render a frame from each major scene to check for overflow
+   npx remotion still src/index.ts [CompositionName] --frame=[scene-middle-frame] --output=test-scene-X.png
+   ```
+   - Check scenes with vertical content (Architecture diagrams, code snippets, multi-section layouts)
+   - Verify ALL content fits within 1080px viewport height
+   - No text, boxes, or elements should extend beyond visible area
+   - Common overflow scenes: Architecture diagrams, Getting Started (code blocks), Production Integration
+   - **If content overflows:** Reduce font sizes, padding, gaps, and margins until everything fits
+
 **If ANY verification step fails, you have NOT completed the skill.**
 
 ## Best Practices
@@ -496,6 +508,7 @@ Before completing this skill, you MUST:
 - **Readable Text**: Minimum 2rem font size, high contrast
 - **Smooth Animations**: Prefer spring() for natural motion
 - **Visual Hierarchy**: Most important info should be largest and centered
+- **Viewport Awareness**: All content must fit within 1920x1080 viewport. Scenes with vertical stacking (diagrams, code blocks) need compact spacing and smaller fonts to prevent overflow.
 
 ### Performance
 - **Optimize Assets**: Compress images and audio before importing
@@ -625,6 +638,12 @@ Animate system architecture components:
    - Phase 9 verification is MANDATORY
    - Test renders are REQUIRED
 
+❌ **Content overflow beyond viewport**
+   - Scenes with vertical content (diagrams, code, multi-section layouts) often overflow
+   - Always test render frames from complex scenes
+   - Reduce font sizes, padding, gaps, and margins to fit 1080px height
+   - Architecture and Production Integration scenes are common culprits
+
 ## Troubleshooting
 
 - **Video too long**: Reduce durationInFrames or remove less important scenes
@@ -632,6 +651,7 @@ Animate system architecture components:
 - **Text unreadable**: Increase font size and improve contrast
 - **Render takes too long**: Reduce resolution or frame rate for testing
 - **Out of sync audio**: Ensure all Sequence timings are accurate
+- **Content extends beyond screen**: Reduce padding (2rem → 1rem), font sizes (2rem → 1.5rem), gaps (2rem → 0.5rem), and top positioning (30% → 26%). Test with `npx remotion still` to verify fixes.
 
 ## References
 
@@ -649,6 +669,7 @@ A successful tutorial video should:
 5. Use consistent branding and professional visual design
 6. Be technically accurate in all representations
 7. Engage viewers and clearly communicate value proposition
+8. Have all content properly fitted within the 1920x1080 viewport with no overflow
 
 ## Skill Completion Checklist
 
@@ -659,6 +680,7 @@ Before reporting "skill complete", verify:
 - [ ] Architecture scene exists and visualizes the system design
 - [ ] `npm run dev` runs without errors
 - [ ] At least one test frame renders successfully
+- [ ] **Test frames from complex scenes show NO content overflow** (Architecture, Production Integration, etc.)
 - [ ] All 17 items in REQUIRED Implementation Checklist are complete
 - [ ] README.md includes complete instructions
 - [ ] You did NOT skip features with "you can add later" rationale
