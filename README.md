@@ -80,17 +80,92 @@ brew install --cask claude-code
 curl -fsSL https://claude.ai/install.sh | bash
 ```
 
-### 3. Install Python dependencies
+### 3. Set up Python environment with uv (recommended)
 
-Using `uv` (recommended):
+This project uses **[uv](https://docs.astral.sh/uv/)** - an extremely fast Python package installer and resolver written in Rust.
+
+#### Why uv?
+- ⚡ **10-100x faster** than pip
+- 🔒 **Deterministic** - `uv.lock` ensures reproducible installs
+- 🎯 **Simple** - Manages Python versions, virtual environments, and dependencies
+- 💾 **Efficient** - Global cache reduces disk usage
+
+#### Install uv
+
+**macOS/Linux:**
 ```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+**Windows (PowerShell):**
+```powershell
+powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+**Using Homebrew:**
+```bash
+brew install uv
+```
+
+**Using pip:**
+```bash
+pip install uv
+```
+
+**Verify installation:**
+```bash
+uv --version
+```
+
+#### Set up the project
+
+**Option 1: Let uv manage everything (recommended)**
+```bash
+# uv will automatically:
+# - Create a virtual environment in .venv
+# - Install the correct Python version (3.12+)
+# - Install all dependencies from uv.lock
 uv sync
 ```
 
-Or using pip:
+**Option 2: Manual virtual environment**
 ```bash
-pip install -r requirements.txt
+# Create virtual environment
+uv venv
+
+# Activate it
+source .venv/bin/activate  # macOS/Linux
+# or
+.venv\Scripts\activate     # Windows
+
+# Install dependencies
+uv pip install -e .
 ```
+
+#### Verify installation
+```bash
+# Check Python version
+uv run python --version
+
+# Verify dependencies
+uv pip list
+```
+
+#### Alternative: Using standard pip
+
+If you prefer not to use uv:
+```bash
+# Create virtual environment
+python -m venv .venv
+
+# Activate it
+source .venv/bin/activate  # macOS/Linux
+
+# Install dependencies
+pip install -e .
+```
+
+**Learn more about uv:** https://docs.astral.sh/uv/
 
 ### 4. Set up your API key
 
